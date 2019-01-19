@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello</title>
+</head>
+<body>
+	<br>
+	<br>
+	<table border = "3">
+		<tr th:each= "fishlist : ${fishlist}">
+			<form action = "#" th:action="@{/Shopping}" th:object="${ListForm}" method="POST">
+				<td th:text = "${fishlist.getName()}"></td>
+				<td th:text = "${fishlist.getPrice()}"></td>
+				<td><select name="num">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					</select>
+				</td>
+				<td>
+				<!-- hiddenは値を受け渡しする用、画面には表示されない -->
+				<input type = "hidden" name = "name" th:value = "${fishlist.getName()}"/>
+				<input type = "hidden" name = "price" th:value = "${fishlist.getPrice()}"/>
+				<input type = "submit" name = "Cart" value = "カートに追加"/>
+				</td>
+			</form>
+		</tr>
+	</table>
+	<br>
+	合計金額：[[${session['total']}]]
+	<br>
+	<br>
+	<th:block th:each="cartlist: ${cartlist}">
+		<dt>
+			<span th:text="${cartlist.getItem().getName()}"></span>
+			<span th:text="${cartlist.getItem().getPrice()}"></span>
+			<span th:text="${cartlist.getNum()}"></span>
+		</dt>
+	</th:block>
+</body>
